@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+</head>
+
+<body>
+	<!-- 结构 -->
+	<!-- 页面头部分	 -->
+	<div id="indexapp">
+		<header>
+			<!-- nav部分 -->
+			<nav>
+				<!-- logo部分 -->
+				<div class="logo">
+					<img style="margin-top:-22px" width="200" height="80" src="assets/images/logo.png" alt="">
+				</div>
+				<!-- 导航栏部分 -->
+				<div class="navbar">
+					<ul>
+						<li><a href="#/">首页</a></li>
+						<li><a href="#/courseList">课程</a></li>
+						<li><a href="#/stuUserCenter/Courses">学习中心</a></li>
+					</ul>
+				</div>
+				<!-- 个人中心部分 -->
+				<div class="personal" v-if="$store.state.islogin">
+					<div class="perInfo" @mouseenter="showUserInfo = true" @mouseleave="showUserInfo = false">
+						<transition name="info">
+							<div class="moreInfo" v-if="showUserInfo">
+								<div class="contain">
+									<hr>
+									<h2>{{$store.state.user.name}}</h2>
+									<h4>注册时间：2019/4/29</h4>
+									<ul>
+										<li><a href="#/stuUserCenter/Info/stuUserInfo"><i class="fa fa-user-circle"></i>
+												<span style="margin-right: 95px;float: right;">个人信息</span> </a></li>
+										<li><a href="#/stuUserCenter/Courses/stuUserCourses"><i
+													class="fa fa-mortar-board"></i> <span
+													style="margin-right: 95px;float: right;">我的课程</span> </a></li>
+										<li><a href="#/stuUserCenter/Notice/stuUserNotice"><i
+													class="fa fa-paper-plane"></i> <span
+													style="margin-right: 95px;float: right;"> 我的通知</span> </a></li>
+										<li><a href="#/stuUserCenter/Courses/joinCourse"><i
+													class="fa fa-plus-square"></i> <span
+													style="margin-right: 95px;float: right;">加入课程</span> </a></li>
+									</ul>
+
+									<div class="signout" @click="logout"><i class="fa fa-sign-out"></i>退出登录</div>
+								</div>
+							</div>
+						</transition>
+
+						<div style="float: left;width: 30px;height:30px;border-radius: 50%;overflow: hidden;">
+							<img :src="'http://localhost:8080'+$store.state.user.head_photo" style="margin: 0;margin-top: -15px;padding:0"
+								width="30" height="30">
+						</div>
+						<i style="position: absolute;top:13px;left: 36px;z-index: 99;
+									display: inline-block; border:6px solid transparent ;border-top-color:grey;padding: 0;margin: 0">
+						</i>
+					</div>
+					<div style="float: left;margin-left: 10px;width: 73px;height:40px;"><a
+							href="#/stuUserCenter/Info/stuUserInfo"><i class="fa fa-user"></i>个人中心 </a></div>
+					<div style="float: left;margin-left: 10px;width: 60px;height:40px;"><a
+							href="#/stuUserCenter/Notice/stuUserNotice"><i class="fa fa-bell"></i>通知</a></div>
+
+				</div>
+				<!-- 搜索框部分 -->
+				<div class="search">
+					<form action="">
+						<input type="text" placeholder="请输入关键词">
+						<!-- placeholder占位符 内容输入自动清除默认值 -->
+						<div class="layui-btn layui-btn-normal" style="font-size: 15px;float: right;margin-right: -1px"
+							@click="$message.success('功能有待扩展')">
+							<i class="fa fa-search"></i></div>
+					</form>
+				</div>
+
+			</nav>
+		</header>
+
+		<router-view></router-view>
+
+		<footer>
+			<div class="container footer-in">
+				<div class="footer-l">
+					<img src="assets/images/logo.png"  alt="">
+					<p>本网站参考至传智播客高校学习平台，仅当学习使用。<br />
+						© 2019年 DGUT.保留所有权利。-粤ICP备0000000000号</p>
+					<a href="http://stu.ityxb.com/index.htm" target="blank">参考网站地址</a>
+				</div>
+				<div class="footer-r">
+					<dl>
+						<dt>关于iCoures</dt>
+						<dd><a href="javascript:">关于</a></dd>
+						<dd><a href="javascript:">管理团队</a></dd>
+						<dd><a href="javascript:">工作机会</a></dd>
+						<dd><a href="javascript:">客户服务</a></dd>
+						<dd><a href="javascript:">帮助</a></dd>
+					</dl>
+					<dl>
+						<dt>关于iCoures</dt>
+						<dd><a href="javascript:">关于</a></dd>
+						<dd><a href="javascript:">管理团队</a></dd>
+						<dd><a href="javascript:">工作机会</a></dd>
+						<dd><a href="javascript:">客户服务</a></dd>
+						<dd><a href="javascript:">帮助</a></dd>
+					</dl>
+					<dl>
+						<dt>关于iCoures</dt>
+						<dd><a href="javascript:">关于</a></dd>
+						<dd><a href="javascript:">管理团队</a></dd>
+						<dd><a href="javascript:">工作机会</a></dd>
+						<dd><a href="javascript:">客户服务</a></dd>
+						<dd><a href="javascript:">帮助</a></dd>
+					</dl>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+
+
+
+
+
+
+<script type="text/javascript" src="index.bundle.js"></script>
+</body>
+
+
+
+</html>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	<!--扫描web层的@Controller -->
+	<context:component-scan
+		base-package="com.iCourse.*.web.controller.*" />
+
+	<!-- 注解驱动 自动配置处理器映射器和处理器适配器等 -->
+	<!-- <mvc:annotation-driven /> -->
+	<!-- 文件上传 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="resolveLazily" value="true"></property>
+	</bean>
+	
+	<!-- 配置验证码 -->
+    <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+            <bean class="com.google.code.kaptcha.util.Config">
+                <constructor-arg>
+                    <props>
+                        <!-- 图片边框 -->
+                        <prop key="kaptcha.border">no</prop>
+                        <!-- 图片宽度 -->
+                        <prop key="kaptcha.image.width">95</prop>
+                        <!-- 图片高度 -->
+                        <prop key="kaptcha.image.height">45</prop>
+                        <!-- 验证码背景颜色渐变，开始颜色 -->
+                        <prop key="kaptcha.background.clear.from">248,248,248</prop>
+                        <!-- 验证码背景颜色渐变，结束颜色 -->
+                        <prop key="kaptcha.background.clear.to">248,248,248</prop>
+                        <!-- 验证码的字符 -->
+                        <prop key="kaptcha.textproducer.char.string">0123456789abcdefghijklmnopqrstuvwxyz</prop>
+                        <!-- 验证码字体颜色 -->
+                        <prop key="kaptcha.textproducer.font.color">0,0,255</prop>
+                        <!-- 验证码的效果，水纹 -->
+                        <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.WaterRipple</prop>
+                        <!-- 验证码字体大小 -->
+                        <prop key="kaptcha.textproducer.font.size">32</prop>
+                        <!-- 验证码字数 -->
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                        <!-- 验证码文字间距 -->
+                        <prop key="kaptcha.textproducer.char.space">4</prop>
+                        <!-- 验证码字体 -->
+                        <prop key="kaptcha.textproducer.font.names">new Font("Arial", 1, fontSize), new Font("Courier", 1, fontSize)</prop>
+                        <!-- 不加噪声 -->
+                        <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.NoNoise</prop>
+                        <!-- session的key -->
+                        <prop key="kaptcha.session.key">code</prop>
+                    </props>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+	
+	
+ 
+	<!-- <bean id="mailServicempl" class="com.iCourse.user.service.impl.MailServicempl">
+		<property name="mailSender" ref="mailSender" /> 
+	</bean> -->
+
+	<mvc:annotation-driven>
+		<mvc:message-converters
+			register-defaults="true">
+			<bean
+				class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+				<property name="supportedMediaTypes"
+					value="application/json" />
+				<property name="features">
+					<list>
+						<!--设置null值也要输出，fastjson默认是关闭的 -->
+						<value>WriteMapNullValue</value>
+						<!--设置使用文本方式输出日期，fastjson默认是long -->
+						<value>WriteDateUseDateFormat</value>
+						<!-- <value>DisableCircularReferenceDetect</value> -->
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<bean id="DisableCircularReferenceDetect"
+		class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+		<property name="staticField"
+			value="com.alibaba.fastjson.serializer.SerializerFeature.DisableCircularReferenceDetect"></property>
+	</bean>
+	<!-- 配置视图解析器 -->
+	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+		配置逻辑视图的前缀 <property name="prefix" value="/WEB-INF/" /> 配置逻辑视图的后缀 <property 
+		name="suffix" value=".jsp" /> </bean> -->
+
+	<mvc:resources mapping="/userImages/**"
+		location="/images/" />
+	<mvc:resources mapping="/video/**" location="/video/" />
+	
+	<mvc:resources mapping="/file/*" location="/file/" />
+</beans>
